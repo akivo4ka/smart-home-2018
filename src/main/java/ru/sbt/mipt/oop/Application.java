@@ -14,12 +14,10 @@ public class Application {
         Application.smartHomeLoader = smartHomeLoader;
     }
 
-
     public static void main(String... args) throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         runEventCycle(smartHome);
     }
-
 
     private static void runEventCycle(SmartHome smartHome) {
         SensorEvent event = RandomSensorEventProvider.getNextSensorEvent();
@@ -34,5 +32,4 @@ public class Application {
             event = RandomSensorEventProvider.getNextSensorEvent();
         }
     }
-
 }

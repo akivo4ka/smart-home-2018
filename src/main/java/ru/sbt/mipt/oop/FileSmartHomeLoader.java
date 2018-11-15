@@ -11,7 +11,7 @@ public class FileSmartHomeLoader implements SmartHomeLoader {
     public SmartHome loadSmartHome() throws IOException {
         // считываем состояние дома из файла
         Gson gson = new Gson();
-        String json = new String(Files.readAllBytes(Paths.get("smart-home-1.js")));
+        String json = new String(Files.readAllBytes(Paths.get("C:\\Users\\THINK\\IdeaProjects\\smart-home-2018\\src\\main\\resources\\smart-home-1.js")));
         return gson.fromJson(json, SmartHome.class);
     }
 }
