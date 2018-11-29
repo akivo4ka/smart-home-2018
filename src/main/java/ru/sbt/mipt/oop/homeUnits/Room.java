@@ -1,8 +1,11 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.homeUnits;
+
+import ru.sbt.mipt.oop.Action;
+import ru.sbt.mipt.oop.SensorEvent;
 
 import java.util.Collection;
 
-public class Room {
+public class Room implements  HomeUnit {
     private Collection<Light> lights;
     private Collection<Door> doors;
     private String name;
@@ -23,5 +26,16 @@ public class Room {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void processAction(Action action) {
+        for (Door door: doors) {
+            door.processAction(action);
+        }
+        for (Light light: lights) {
+            light.processAction(action);
+        }
+        action.execute(this);
     }
 }

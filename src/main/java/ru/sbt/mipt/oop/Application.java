@@ -1,10 +1,13 @@
 package ru.sbt.mipt.oop;
 
+import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.processors.DoorEventProcessor;
+import ru.sbt.mipt.oop.processors.EventProcessor;
+import ru.sbt.mipt.oop.processors.LightEventProcessor;
+
 import java.io.IOException;
 
-import static ru.sbt.mipt.oop.FileSmartHomeLoader.*;
 import static ru.sbt.mipt.oop.SensorEventType.*;
-import static ru.sbt.mipt.oop.SmartHomeLoader.*;
 
 public class Application {
 
@@ -21,6 +24,7 @@ public class Application {
 
     private static void runEventCycle(SmartHome smartHome) {
         SensorEvent event = RandomSensorEventProvider.getNextSensorEvent();
+        EventProcessor eventProcessor;
         while (event != null) {
             System.out.println("Got event: " + event);
             if (event.getType() == LIGHT_ON || event.getType() == LIGHT_OFF) {

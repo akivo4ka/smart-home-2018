@@ -1,6 +1,9 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.homeUnits;
 
-public class Light {
+import ru.sbt.mipt.oop.Action;
+import ru.sbt.mipt.oop.SensorEvent;
+
+public class Light implements HomeUnit {
     private boolean isOn;
     private final String id;
 
@@ -19,5 +22,10 @@ public class Light {
 
     public void setOn(boolean on) {
         isOn = on;
+    }
+
+    @Override
+    public void processAction(Action action) {
+        action.execute(this);
     }
 }

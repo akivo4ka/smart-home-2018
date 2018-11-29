@@ -1,11 +1,10 @@
 import junit.framework.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import ru.sbt.mipt.oop.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import ru.sbt.mipt.oop.homeUnits.Light;
+import ru.sbt.mipt.oop.homeUnits.Room;
+import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.processors.LightEventProcessor;
 
 public class LightEventProcessorTest {
 
@@ -18,18 +17,14 @@ public class LightEventProcessorTest {
         SensorEvent lightOnEvent = new SensorEvent(SensorEventType.LIGHT_ON, lightId);
         LightEventProcessor.processLightEvent(smartHome, lightOnEvent);
 
-
         for (Room room: smartHome.getRooms()) {
             for (Light light: room.getLights()) {
                 if (light.getId().equals(lightId)) {
-                    Assert.assertEquals(light.isOn(), true);
+                    Assert.assertTrue(light.isOn());
                     break;
                 }
-
             }
-
         }
-
 
     }
 
