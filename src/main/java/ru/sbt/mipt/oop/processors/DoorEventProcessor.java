@@ -13,6 +13,10 @@ public class DoorEventProcessor implements EventProcessor {
     @Override
     public void process(SmartHome smartHome, SensorEvent event) {
         if (!isDoorEvent(event)) return;
+        if (smartHome.alarmSystem.checkAlarmOn()) {
+            System.out.println("ALARM! Sending sms.");
+            return;
+        }
         DoorIterator doorIterator = new DoorIterator(smartHome);
         while (doorIterator.hasNext()) {
             runEventCycle(smartHome, event, doorIterator);

@@ -13,6 +13,10 @@ public class LightEventProcessor implements EventProcessor {
     @Override
     public void process(SmartHome smartHome, SensorEvent event) {
         if (!isLightEvent(event)) return;
+        if (smartHome.alarmSystem.checkAlarmOn()) {
+            System.out.println("ALARM! Sending sms.");
+            return;
+        }
         LightIterator lightIterator = new LightIterator(smartHome);
         while (lightIterator.hasNext()) {
             runEventCycle(event, lightIterator);

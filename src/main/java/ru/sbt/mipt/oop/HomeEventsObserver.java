@@ -1,7 +1,9 @@
 package ru.sbt.mipt.oop;
 
+import ru.sbt.mipt.oop.alarmSystem.AlarmSystemStateEnum;
 import ru.sbt.mipt.oop.homeUnits.SmartHome;
 import ru.sbt.mipt.oop.processors.EventProcessor;
+import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 import java.util.ArrayList;
@@ -22,8 +24,13 @@ public class HomeEventsObserver {
     public void observer(SmartHome smartHome) {
         SensorEvent event = RandomSensorEventProvider.getNextSensorEvent();
         while (event != null) {
-            processEvent(smartHome, event);
-            event = RandomSensorEventProvider.getNextSensorEvent();
+            if (!(event instanceof AlarmSensorEvent) && smartHome.alarmSystem.getSystemState().equals(AlarmSystemStateEnum.ON)) {
+                smartHome.alarmSystem.setAlarm();
+                System.out.println("ALARM! Sending sms.");
+            } else {
+                processEvent(smartHome, event);
+                event = RandomSensorEventProvider.getNextSensorEvent();
+            }
         }
     }
 

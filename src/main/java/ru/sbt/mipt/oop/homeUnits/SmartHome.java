@@ -1,6 +1,7 @@
 package ru.sbt.mipt.oop.homeUnits;
 
 import ru.sbt.mipt.oop.Action;
+import ru.sbt.mipt.oop.alarmSystem.AlarmSystem;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,8 +9,11 @@ import java.util.Collection;
 public class SmartHome implements HomeUnit {
     Collection<Room> rooms;
 
+    public AlarmSystem alarmSystem;
+
     public SmartHome() {
         rooms = new ArrayList<>();
+        alarmSystem = new AlarmSystem();
     }
 
     public SmartHome(Collection<Room> rooms) {
