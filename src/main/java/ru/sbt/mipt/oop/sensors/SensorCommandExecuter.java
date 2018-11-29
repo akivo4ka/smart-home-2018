@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.sensors;
 
 public class SensorCommandExecuter {
     public static void executeCommand(SensorCommand command) {

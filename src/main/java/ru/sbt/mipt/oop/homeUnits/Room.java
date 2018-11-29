@@ -1,7 +1,6 @@
 package ru.sbt.mipt.oop.homeUnits;
 
 import ru.sbt.mipt.oop.Action;
-import ru.sbt.mipt.oop.SensorEvent;
 
 import java.util.Collection;
 

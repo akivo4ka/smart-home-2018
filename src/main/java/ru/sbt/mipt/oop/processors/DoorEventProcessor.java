@@ -1,27 +1,26 @@
 package ru.sbt.mipt.oop.processors;
 
-import org.w3c.dom.events.Event;
-import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.homeUnits.Door;
-import ru.sbt.mipt.oop.homeUnits.Light;
 import ru.sbt.mipt.oop.homeUnits.Room;
 import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
 
-import static ru.sbt.mipt.oop.SensorEventType.DOOR_CLOSED;
-import static ru.sbt.mipt.oop.SensorEventType.DOOR_OPEN;
+import static ru.sbt.mipt.oop.sensors.SensorEventType.DOOR_CLOSED;
+import static ru.sbt.mipt.oop.sensors.SensorEventType.DOOR_OPEN;
 
 public class DoorEventProcessor implements EventProcessor {
 
-    private static boolean isDoorEvent(SensorEvent event) {
-        return (event.getType() == DOOR_OPEN || event.getType() == DOOR_CLOSED);
-    }
-
-    public static void processDoorEvent(SmartHome smartHome, SensorEvent event) {
+    @Override
+    public void process(SmartHome smartHome, SensorEvent event) {
         if (!isDoorEvent(event)) return;
         DoorIterator doorIterator = new DoorIterator(smartHome);
         while (doorIterator.hasNext()) {
             runEventCycle(smartHome, event, doorIterator);
         }
+    }
+
+    private static boolean isDoorEvent(SensorEvent event) {
+        return (event.getType() == DOOR_OPEN || event.getType() == DOOR_CLOSED);
     }
 
     private static void runEventCycle(SmartHome smartHome, SensorEvent event, DoorIterator doorIterator) {
@@ -64,11 +63,6 @@ public class DoorEventProcessor implements EventProcessor {
 //            }
 //        }
 //    }
-
-    @Override
-    public void process(SmartHome smartHome, SensorEvent event) {
-        processDoorEvent(smartHome, event);
-    }
 }
 
 //class DoorSwitch implements Action {

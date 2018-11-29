@@ -5,6 +5,8 @@ import ru.sbt.mipt.oop.homeUnits.Light;
 import ru.sbt.mipt.oop.homeUnits.Room;
 import ru.sbt.mipt.oop.homeUnits.SmartHome;
 import ru.sbt.mipt.oop.processors.LightEventProcessor;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
+import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 public class LightEventProcessorTest {
 
@@ -15,7 +17,8 @@ public class LightEventProcessorTest {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         String lightId = "1";
         SensorEvent lightOnEvent = new SensorEvent(SensorEventType.LIGHT_ON, lightId);
-        LightEventProcessor.processLightEvent(smartHome, lightOnEvent);
+        LightEventProcessor lightEventProcessor = new LightEventProcessor();
+        lightEventProcessor.process(smartHome, lightOnEvent);
 
         for (Room room: smartHome.getRooms()) {
             for (Light light: room.getLights()) {

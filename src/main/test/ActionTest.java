@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class ActionTest {
 
     @Test
-    public void testActionableComposite() {
+    public void actionableCompositeTest() {
         List<Light> lights1 = Arrays.asList(new Light("1", false), new Light("2", true));
         List<Door> doors1 = Collections.singletonList(new Door(false, "1"));
         Room kitchen = new Room(lights1, doors1, "kitchen");

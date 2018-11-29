@@ -1,22 +1,17 @@
 package ru.sbt.mipt.oop.processors;
 
-import ru.sbt.mipt.oop.Action;
-import ru.sbt.mipt.oop.SensorEvent;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.homeUnits.Light;
 import ru.sbt.mipt.oop.homeUnits.Room;
 import ru.sbt.mipt.oop.homeUnits.SmartHome;
 
-import static ru.sbt.mipt.oop.SensorEventType.LIGHT_ON;
-import static ru.sbt.mipt.oop.SensorEventType.LIGHT_OFF;
+import static ru.sbt.mipt.oop.sensors.SensorEventType.LIGHT_ON;
+import static ru.sbt.mipt.oop.sensors.SensorEventType.LIGHT_OFF;
 
 public class LightEventProcessor implements EventProcessor {
 
     @Override
     public void process(SmartHome smartHome, SensorEvent event) {
-        processLightEvent(smartHome, event);
-    }
-
-    public static void processLightEvent(SmartHome smartHome, SensorEvent event) {
         if (!isLightEvent(event)) return;
         LightIterator lightIterator = new LightIterator(smartHome);
         while (lightIterator.hasNext()) {

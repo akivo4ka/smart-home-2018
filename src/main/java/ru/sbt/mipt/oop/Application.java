@@ -4,10 +4,13 @@ import ru.sbt.mipt.oop.homeUnits.SmartHome;
 import ru.sbt.mipt.oop.processors.DoorEventProcessor;
 import ru.sbt.mipt.oop.processors.EventProcessor;
 import ru.sbt.mipt.oop.processors.LightEventProcessor;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import static ru.sbt.mipt.oop.SensorEventType.*;
+import static ru.sbt.mipt.oop.sensors.SensorEventType.*;
 
 public class Application {
 
@@ -19,21 +22,16 @@ public class Application {
 
     public static void main(String... args) throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
-        runEventCycle(smartHome);
+        observeHomeEvents(smartHome);
     }
 
-    private static void runEventCycle(SmartHome smartHome) {
-        SensorEvent event = RandomSensorEventProvider.getNextSensorEvent();
-        EventProcessor eventProcessor;
-        while (event != null) {
-            System.out.println("Got event: " + event);
-            if (event.getType() == LIGHT_ON || event.getType() == LIGHT_OFF) {
-                LightEventProcessor.processLightEvent(smartHome, event);
-            }
-            if (event.getType() == DOOR_OPEN || event.getType() == DOOR_CLOSED) {
-                DoorEventProcessor.processDoorEvent(smartHome, event);
-            }
-            event = RandomSensorEventProvider.getNextSensorEvent();
-        }
+    private static void observeHomeEvents(SmartHome smartHome) {
+        List<EventProcessor> eventProcessorList = new ArrayList<>();
+        LightEventProcessor lightEventProcessor = new LightEventProcessor();
+        DoorEventProcessor doorEventProcessor = new DoorEventProcessor();
+        eventProcessorList.add(lightEventProcessor);
+        eventProcessorList.add(doorEventProcessor);
+        HomeEventsObserver homeEventsObserver = new HomeEventsObserver(eventProcessorList);
+        homeEventsObserver.observer(smartHome);
     }
 }

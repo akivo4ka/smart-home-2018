@@ -5,6 +5,8 @@ import ru.sbt.mipt.oop.homeUnits.Door;
 import ru.sbt.mipt.oop.homeUnits.Room;
 import ru.sbt.mipt.oop.homeUnits.SmartHome;
 import ru.sbt.mipt.oop.processors.DoorEventProcessor;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
+import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 public class DoorEventProcessorTest {
 
@@ -15,7 +17,8 @@ public class DoorEventProcessorTest {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         String doorId = "1";
         SensorEvent doorOnEvent = new SensorEvent(SensorEventType.DOOR_OPEN, doorId);
-        DoorEventProcessor.processDoorEvent(smartHome, doorOnEvent);
+        DoorEventProcessor doorEventProcessor = new DoorEventProcessor();
+        doorEventProcessor.process(smartHome, doorOnEvent);
 
         for (Room room: smartHome.getRooms()) {
             for (Door door: room.getDoors()) {
