@@ -16,24 +16,25 @@ public class Application {
         Application.smartHomeLoader = smartHomeLoader;
     }
 
-    public void main(String... args) throws IOException {
+    public static void main(String... args) throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
-        observeHomeEvents(smartHome);
+        AlarmSystem  alarmSystem = new AlarmSystem();
+        observeHomeEvents(smartHome, alarmSystem);
     }
 
-    private void observeHomeEvents(SmartHome smartHome) {
-        List<EventProcessor> eventProcessorList = createEventProcessorList(smartHome);
+    private static void observeHomeEvents(SmartHome smartHome, AlarmSystem alarmSystem) {
+        List<EventProcessor> eventProcessorList = createEventProcessorList(smartHome, alarmSystem);
         SensorEventProvider sensorEventProvider = new RandomSensorEventProvider();
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(eventProcessorList, sensorEventProvider);
         homeEventsObserver.observe();
     }
 
-    private List<EventProcessor> createEventProcessorList(SmartHome smartHome) {
+    private static List<EventProcessor> createEventProcessorList(SmartHome smartHome, AlarmSystem alarmSystem) {
         List<EventProcessor> eventProcessorList = new ArrayList<>();
-        LightEventProcessor lightEventProcessor = new LightEventProcessor(smartHome);
-        DoorEventProcessor doorEventProcessor = new DoorEventProcessor(smartHome);
-        HallDoorEventProcessor hallDoorEventProcessor = new HallDoorEventProcessor(smartHome);
-        AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome, new AlarmSystem());
+        EventProcessor lightEventProcessor = new DecoratorCheckAlarmEventProcessor(new LightEventProcessor(smartHome));
+        EventProcessor doorEventProcessor = new DecoratorCheckAlarmEventProcessor(new DoorEventProcessor(smartHome));
+        EventProcessor hallDoorEventProcessor = new DecoratorCheckAlarmEventProcessor(new HallDoorEventProcessor(smartHome));
+        AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome);
         eventProcessorList.add(lightEventProcessor);
         eventProcessorList.add(doorEventProcessor);
         eventProcessorList.add(hallDoorEventProcessor);

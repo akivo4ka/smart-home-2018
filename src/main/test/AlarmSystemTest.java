@@ -1,16 +1,11 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.sbt.mipt.oop.FileSmartHomeLoader;
-import ru.sbt.mipt.oop.HomeEventsObserver;
-import ru.sbt.mipt.oop.SensorEventProvider;
-import ru.sbt.mipt.oop.SmartHomeLoader;
+import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.alarmSystem.AlarmSystem;
 import ru.sbt.mipt.oop.homeUnits.Door;
 import ru.sbt.mipt.oop.homeUnits.Room;
 import ru.sbt.mipt.oop.homeUnits.SmartHome;
-import ru.sbt.mipt.oop.processors.AlarmEventProcessor;
-import ru.sbt.mipt.oop.processors.DoorEventProcessor;
-import ru.sbt.mipt.oop.processors.EventProcessor;
+import ru.sbt.mipt.oop.processors.*;
 import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEventType;
@@ -29,13 +24,8 @@ class AlarmSystemTestSensorEventProvider implements SensorEventProvider {
 
     int i = 0;
 
-    AlarmSystemTestSensorEventProvider() {
-        list = new ArrayList<>();
-        String doorId = "3";
-        AlarmSensorEvent alarmSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_ACTIVATE, "0", "qwe123QWE");
-        SensorEvent doorOnEvent = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId);
-        list.add(alarmSensorEvent);
-        list.add(doorOnEvent);
+    AlarmSystemTestSensorEventProvider(List<SensorEvent> list) {
+        this.list = list;
     }
 
     @Override
@@ -52,30 +42,39 @@ public class AlarmSystemTest {
     @Test
     public void testNewSystemIsOff() throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
-        Assert.assertEquals(OFF, smartHome.alarmSystem.getSystemState());
-    }
-
-    @Test
-    public void turnOnSetsTurnedOnState() throws IOException {
-        SmartHome smartHome = smartHomeLoader.loadSmartHome();
-        smartHome.alarmSystem.turnOn("qwe123QWE");
-        assertEquals(ON, smartHome.alarmSystem.getSystemState());
+        Assert.assertEquals(OFF, smartHome.getAlarmSystem().getSystemState());
     }
 
     @Test
     public void turnOnSetsCodeAndTurnOffChecksCode() throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
-        smartHome.alarmSystem.turnOn("qwe123QWE");
-        smartHome.alarmSystem.turnOff("qwerty");
-        assertEquals(ALARM, smartHome.alarmSystem.getSystemState());
+
+        List<SensorEvent> list = new ArrayList<>();
+        AlarmSensorEvent alarmActivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_ACTIVATE, "0", "qwe123QWE");
+        AlarmSensorEvent alarmDeactivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_DEACTIVATE, "0", "qwe");
+        list.add(alarmActivateSensorEvent);
+        list.add(alarmDeactivateSensorEvent);
+        SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
+
+        HomeEventsObserver homeEventsObserver = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
+        homeEventsObserver.observe();
+
+        assertEquals(ALARM, smartHome.getAlarmSystem().getSystemState());
     }
 
     @Test
     public void turnOnSetsCodeAndTurnOff() throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
-        smartHome.alarmSystem.turnOn("qwe123QWE");
-        smartHome.alarmSystem.turnOff("qwe123QWE");
-        assertEquals(OFF, smartHome.alarmSystem.getSystemState());
+        List<SensorEvent> list = new ArrayList<>();
+        AlarmSensorEvent alarmActivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_ACTIVATE, "0", "qwe123QWE");
+        AlarmSensorEvent alarmDeactivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_DEACTIVATE, "0", "qwe123QWE");
+        list.add(alarmActivateSensorEvent);
+        list.add(alarmDeactivateSensorEvent);
+        SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
+
+        HomeEventsObserver homeEventsObserver = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
+        homeEventsObserver.observe();
+        assertEquals(OFF, smartHome.getAlarmSystem().getSystemState());
     }
 
     @Test
@@ -83,13 +82,15 @@ public class AlarmSystemTest {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         AlarmSystem alarmSystem = new AlarmSystem();
 
-        AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome, alarmSystem);
-        DoorEventProcessor doorEventProcessor = new DoorEventProcessor(smartHome);
-        SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider();
+        List<EventProcessor> eventProcessorList = createEventProcessorList(smartHome);
 
-        List<EventProcessor> eventProcessorList = new ArrayList<>();
-        eventProcessorList.add(alarmEventProcessor);
-        eventProcessorList.add(doorEventProcessor);
+        List<SensorEvent> list = new ArrayList<>();
+        String doorId = "3";
+        AlarmSensorEvent alarmSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_ACTIVATE, "0", "qwe123QWE");
+        SensorEvent doorOnEvent = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId);
+        list.add(alarmSensorEvent);
+        list.add(doorOnEvent);
+        SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
 
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(eventProcessorList, sensorEventProvider);
         homeEventsObserver.observe();
@@ -101,6 +102,19 @@ public class AlarmSystemTest {
                 }
             }
         }
+    }
+
+    private List<EventProcessor> createEventProcessorList(SmartHome smartHome) {
+        List<EventProcessor> eventProcessorList = new ArrayList<>();
+        EventProcessor lightEventProcessor = new DecoratorCheckAlarmEventProcessor(new LightEventProcessor(smartHome));
+        EventProcessor doorEventProcessor = new DecoratorCheckAlarmEventProcessor(new DoorEventProcessor(smartHome));
+        EventProcessor hallDoorEventProcessor = new DecoratorCheckAlarmEventProcessor(new HallDoorEventProcessor(smartHome));
+        AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome);
+        eventProcessorList.add(lightEventProcessor);
+        eventProcessorList.add(doorEventProcessor);
+        eventProcessorList.add(hallDoorEventProcessor);
+        eventProcessorList.add(alarmEventProcessor);
+        return eventProcessorList;
     }
 
 }

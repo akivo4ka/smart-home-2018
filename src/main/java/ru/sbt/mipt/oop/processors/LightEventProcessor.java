@@ -10,7 +10,7 @@ import static ru.sbt.mipt.oop.sensors.SensorEventType.LIGHT_ON;
 
 public class LightEventProcessor implements EventProcessor {
 
-    SmartHome smartHome;
+    private SmartHome smartHome;
 
     public LightEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
@@ -27,20 +27,28 @@ public class LightEventProcessor implements EventProcessor {
         LightIterator lightIterator = new LightIterator(smartHome);
 
         for (Light light : lightIterator) {
-            processLightEvent(event, lightIterator.getCurrentRoom(), light);
+            if (processLightEvent(event, lightIterator.getCurrentRoom(), light)) return;
         }
+        System.out.println("Light with lightID = " + event.getObjectId() + " was not found.");
+    }
+
+    @Override
+    public SmartHome getSmartHome() {
+        return smartHome;
     }
 
     private boolean isLightEvent(SensorEvent event) {
         return (event.getType() == LIGHT_ON || event.getType() == LIGHT_OFF);
     }
 
-    private void processLightEvent(SensorEvent event, Room room, Light light) {
+    private boolean processLightEvent(SensorEvent event, Room room, Light light) {
         if (checkLightIdEqualsEventId(event, light)) {
             boolean b = (event.getType() == LIGHT_ON);
             light.setOn(b);
             System.out.println("Light " + light.getId() + " in room " + room.getName() + " is turned " + (b ? "on" : "off") + " now.");
+            return true;
         }
+        return false;
     }
 
     private boolean checkLightIdEqualsEventId(SensorEvent event, Light light) {

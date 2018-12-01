@@ -9,7 +9,11 @@ import java.util.Collection;
 public class SmartHome implements HomeUnit {
     Collection<Room> rooms;
 
-    public AlarmSystem alarmSystem;
+    private AlarmSystem alarmSystem;
+
+    public AlarmSystem getAlarmSystem() {
+        return alarmSystem;
+    }
 
     public SmartHome() {
         rooms = new ArrayList<>();

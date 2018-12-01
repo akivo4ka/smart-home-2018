@@ -4,11 +4,12 @@ import ru.sbt.mipt.oop.homeUnits.Door;
 import ru.sbt.mipt.oop.homeUnits.Light;
 import ru.sbt.mipt.oop.homeUnits.SmartHome;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
-import ru.sbt.mipt.oop.sensors.SensorEventType;
+
+import static ru.sbt.mipt.oop.sensors.SensorEventType.DOOR_CLOSED;
 
 public class HallDoorEventProcessor implements EventProcessor {
 
-    SmartHome smartHome;
+    private SmartHome smartHome;
 
     public HallDoorEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
@@ -21,14 +22,22 @@ public class HallDoorEventProcessor implements EventProcessor {
         for (Light light : lightIterator) {
             light.setOn(false);
         }
-        System.out.println("Light is turned off everywhere.");
+        System.out.println("... and light is turned off everywhere.");
+    }
+
+    @Override
+    public SmartHome getSmartHome() {
+        return smartHome;
     }
 
     private boolean isHallDoorEvent(SensorEvent event) {
+        if (event.getType() != DOOR_CLOSED) return false;
         DoorIterator doorIterator = new DoorIterator(smartHome);
         for (Door door : doorIterator) {
-            if (checkDoorIdEqualsEventId(event, door)) {
-                if (event.getType() == SensorEventType.DOOR_CLOSED) {
+            if (doorIterator.getCurrentRoom().getName().equals("hall")) {
+                if (checkDoorIdEqualsEventId(event, door)) {
+                    door.setOpen(false);
+                    System.out.println("Hall door was closed ...");
                     return true;
                 }
             }

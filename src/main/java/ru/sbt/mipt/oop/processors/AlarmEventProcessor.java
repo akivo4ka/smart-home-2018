@@ -13,9 +13,9 @@ public class AlarmEventProcessor implements EventProcessor {
     SmartHome smartHome;
     AlarmSystem alarmSystem;
 
-    public AlarmEventProcessor(SmartHome smartHome, AlarmSystem alarmSystem) {
+    public AlarmEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
-        this.alarmSystem = alarmSystem;
+        this.alarmSystem = smartHome.getAlarmSystem();
     }
 
     @Override
@@ -26,6 +26,15 @@ public class AlarmEventProcessor implements EventProcessor {
         } else {
             alarmSystem.turnOff(((AlarmSensorEvent) event).getCode());
         }
+    }
+
+    @Override
+    public SmartHome getSmartHome() {
+        return smartHome;
+    }
+
+    public AlarmSystem getAlarmSystem() {
+        return alarmSystem;
     }
 
     private boolean isAlarmEvent(SensorEvent event) {
