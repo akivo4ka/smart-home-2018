@@ -1,9 +1,6 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.alarmSystem.AlarmSystemStateEnum;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
 import ru.sbt.mipt.oop.processors.EventProcessor;
-import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 import java.util.ArrayList;
@@ -11,33 +8,30 @@ import java.util.List;
 
 public class HomeEventsObserver {
 
-    public List<EventProcessor> eventProcessorList = new ArrayList<>();
+    List<EventProcessor> eventProcessorList = new ArrayList<>();
+    SensorEventProvider sensorEventProvider;
 
-    public HomeEventsObserver(List<EventProcessor> eventProcessorsList) {
+    public HomeEventsObserver(List<EventProcessor> eventProcessorsList, SensorEventProvider sensorEventProvider) {
         this.eventProcessorList = eventProcessorsList;
+        this.sensorEventProvider = sensorEventProvider;
     }
 
     public void addEventProcessor(EventProcessor eventProcessor) {
-        this.eventProcessorList.add(eventProcessor);
+        eventProcessorList.add(eventProcessor);
     }
 
-    public void observer(SmartHome smartHome) {
-        SensorEvent event = RandomSensorEventProvider.getNextSensorEvent();
+    public void observe() {
+        SensorEvent event = sensorEventProvider.getNextSensorEvent();
         while (event != null) {
-            if (!(event instanceof AlarmSensorEvent) && smartHome.alarmSystem.getSystemState().equals(AlarmSystemStateEnum.ON)) {
-                smartHome.alarmSystem.setAlarm();
-                System.out.println("ALARM! Sending sms.");
-            } else {
-                processEvent(smartHome, event);
-                event = RandomSensorEventProvider.getNextSensorEvent();
-            }
+            processEvent(event);
+            event = sensorEventProvider.getNextSensorEvent();
         }
     }
 
-    public void processEvent(SmartHome smartHome, SensorEvent event) {
+    public void processEvent(SensorEvent event) {
         System.out.println("Got event: " + event);
-        for (EventProcessor eventProcessor : this.eventProcessorList) {
-            eventProcessor.process(smartHome, event);
+        for (EventProcessor eventProcessor : eventProcessorList) {
+            eventProcessor.process(event);
         }
     }
 

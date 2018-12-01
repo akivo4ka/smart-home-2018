@@ -17,8 +17,8 @@ public class DoorEventProcessorTest {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         String doorId = "1";
         SensorEvent doorOnEvent = new SensorEvent(SensorEventType.DOOR_OPEN, doorId);
-        DoorEventProcessor doorEventProcessor = new DoorEventProcessor();
-        doorEventProcessor.process(smartHome, doorOnEvent);
+        DoorEventProcessor doorEventProcessor = new DoorEventProcessor(smartHome);
+        doorEventProcessor.process(doorOnEvent);
 
         for (Room room: smartHome.getRooms()) {
             for (Door door: room.getDoors()) {

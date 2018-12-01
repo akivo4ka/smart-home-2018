@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class DoorIterator implements Iterator<Door> {
+public class DoorIterator implements Iterable<Door> {
 
     private int currentRoomId;
     private Room currentRoom;
@@ -27,40 +27,45 @@ public class DoorIterator implements Iterator<Door> {
     }
 
     @Override
-    public boolean hasNext() {
-        if (currentRoomId > rooms.size() - 1) return false;
-        if (currentRoomId == rooms.size() - 1) {
-            Room room  = rooms.get(currentRoomId);
-            return currentDoorId <= new ArrayList<>(room.getDoors()).size() - 1;
-        }
-        return true;
-    }
+    public Iterator<Door> iterator() {
+        return new Iterator<Door>() {
+            @Override
+            public boolean hasNext() {
+                if (currentRoomId > rooms.size() - 1) return false;
+                if (currentRoomId == rooms.size() - 1) {
+                    Room room  = rooms.get(currentRoomId);
+                    return currentDoorId <= new ArrayList<>(room.getDoors()).size() - 1;
+                }
+                return true;
+            }
 
-    @Override
-    public Door next() {
-        List<Door> currentRoomDoors = new ArrayList<>(rooms.get(currentRoomId).getDoors());
-        Door door;
-        currentRoom = rooms.get(currentRoomId);
-        if (currentRoomDoors.size() == 1) {
-            if (currentDoorId == 0) {
-                door = currentRoomDoors.get(currentDoorId);
-                currentRoomId++;
-                currentDoorId = 0;
+            @Override
+            public Door next() {
+                List<Door> currentRoomDoors = new ArrayList<>(rooms.get(currentRoomId).getDoors());
+                Door door;
+                currentRoom = rooms.get(currentRoomId);
+                if (currentRoomDoors.size() == 1) {
+                    if (currentDoorId == 0) {
+                        door = currentRoomDoors.get(currentDoorId);
+                        currentRoomId++;
+                        currentDoorId = 0;
+                    }
+                    else throw new IllegalStateException();
+                }
+                else {
+                    if (currentDoorId < currentRoomDoors.size() - 1) {
+                        door = currentRoomDoors.get(currentDoorId);
+                        currentDoorId++;
+                    }
+                    else if (currentDoorId == currentRoomDoors.size() - 1) {
+                        door = currentRoomDoors.get(currentDoorId);
+                        currentRoomId++;
+                        currentDoorId = 0;
+                    }
+                    else throw new IllegalStateException();
+                }
+                return door;
             }
-            else throw new IllegalStateException();
-        }
-        else {
-            if (currentDoorId < currentRoomDoors.size() - 1) {
-                door = currentRoomDoors.get(currentDoorId);
-                currentDoorId++;
-            }
-            else if (currentDoorId == currentRoomDoors.size() - 1) {
-                door = currentRoomDoors.get(currentDoorId);
-                currentRoomId++;
-                currentDoorId = 0;
-            }
-            else throw new IllegalStateException();
-        }
-        return door;
+        };
     }
 }
