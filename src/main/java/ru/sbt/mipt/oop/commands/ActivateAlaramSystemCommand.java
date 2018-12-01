@@ -9,6 +9,7 @@ import static ru.sbt.mipt.oop.sensors.SensorEventType.ALARM_ACTIVATE;
 public class ActivateAlaramSystemCommand implements Command {
 
     private SmartHome smartHome;
+    private static String code = "qwe123QWE";
 
     public ActivateAlaramSystemCommand(SmartHome smartHome) {
         this.smartHome = smartHome;
@@ -16,7 +17,7 @@ public class ActivateAlaramSystemCommand implements Command {
     @Override
     public void execute() {
         AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome);
-        AlarmSensorEvent alarmSensorEvent = new AlarmSensorEvent(ALARM_ACTIVATE, "1", "qwe123QWE");
+        AlarmSensorEvent alarmSensorEvent = new AlarmSensorEvent(ALARM_ACTIVATE, code);
         alarmEventProcessor.process(alarmSensorEvent);
     }
 }
