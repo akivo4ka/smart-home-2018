@@ -1,5 +1,7 @@
 package ru.sbt.mipt.oop.alarmSystem;
 
+import static ru.sbt.mipt.oop.alarmSystem.AlarmSystemStateEnum.ALARM;
+
 public class AlarmSystem {
 
     private AlarmSystemState alarmSystemState;
@@ -38,5 +40,9 @@ public class AlarmSystem {
 
     public boolean checkAlarmOn() {
         return this.alarmSystemState.getState().equals(AlarmSystemStateEnum.ON);
+    }
+
+    public boolean checkAlarm() {
+        return this.alarmSystemState.getState().equals(ALARM);
     }
 }

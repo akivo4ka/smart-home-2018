@@ -57,7 +57,7 @@ public class AlarmSystemTest {
         SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
 
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
-        homeEventsObserver.observe();
+        homeEventsObserver.start();
 
         assertEquals(ALARM, smartHome.getAlarmSystem().getSystemState());
     }
@@ -73,7 +73,7 @@ public class AlarmSystemTest {
         SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
 
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
-        homeEventsObserver.observe();
+        homeEventsObserver.start();
         assertEquals(OFF, smartHome.getAlarmSystem().getSystemState());
     }
 
@@ -93,7 +93,7 @@ public class AlarmSystemTest {
         SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
 
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(eventProcessorList, sensorEventProvider);
-        homeEventsObserver.observe();
+        homeEventsObserver.start();
 
         for (Room room: smartHome.getRooms()) {
             if (room.getName().equals("bedroom")) {

@@ -15,8 +15,9 @@ public class DecoratorCheckAlarmEventProcessor extends AlarmEventProcessor {
     @Override
     public void process(SensorEvent event) {
         if (super.alarmSystem.checkAlarmOn()) {
+            super.alarmSystem.setAlarm();
             System.out.println("ALARM! Sending sms.");
-        } else {
+        } else if (!super.alarmSystem.checkAlarm()) {
             eventProcessor.process(event);
         }
     }
