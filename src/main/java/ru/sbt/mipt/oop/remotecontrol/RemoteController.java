@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.remoteControl;
+package ru.sbt.mipt.oop.remotecontrol;
 
 import ru.sbt.mipt.oop.commands.Command;
 

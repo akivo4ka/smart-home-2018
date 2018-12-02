@@ -1,9 +1,9 @@
 import junit.framework.Assert;
 import org.junit.Test;
 import ru.sbt.mipt.oop.*;
-import ru.sbt.mipt.oop.homeUnits.Light;
-import ru.sbt.mipt.oop.homeUnits.Room;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.Light;
+import ru.sbt.mipt.oop.homeunits.Room;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.LightEventProcessor;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEventType;

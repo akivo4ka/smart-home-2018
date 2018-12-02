@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.alarmSystem;
+package ru.sbt.mipt.oop.alarmsystem;
 
 public enum AlarmSystemStateEnum {
     ON, OFF, ALARM

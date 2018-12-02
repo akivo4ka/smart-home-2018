@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop.processors;
 
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 public class DecoratorCheckAlarmEventProcessor extends AlarmEventProcessor {
@@ -14,10 +14,10 @@ public class DecoratorCheckAlarmEventProcessor extends AlarmEventProcessor {
 
     @Override
     public void process(SensorEvent event) {
-        if (super.alarmSystem.checkAlarmOn()) {
-            super.alarmSystem.setAlarm();
+        if (super.getAlarmSystem().checkAlarmOn()) {
+            super.getAlarmSystem().setAlarm();
             System.out.println("ALARM! Sending sms.");
-        } else if (!super.alarmSystem.checkAlarm()) {
+        } else if (!super.getAlarmSystem().checkAlarm()) {
             eventProcessor.process(event);
         }
     }

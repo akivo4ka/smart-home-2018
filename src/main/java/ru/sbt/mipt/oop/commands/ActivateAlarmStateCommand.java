@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop.commands;
 
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 
 public class ActivateAlarmStateCommand implements Command {
 

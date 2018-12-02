@@ -1,10 +1,10 @@
-package ru.sbt.mipt.oop.alarmSystem;
+package ru.sbt.mipt.oop.alarmsystem;
 
 public class AlarmSystemStateAlarm implements AlarmSystemState {
 
     private final AlarmSystem alarmSystem;
 
-    public AlarmSystemStateAlarm(AlarmSystem alarmSystem) {
+    AlarmSystemStateAlarm(AlarmSystem alarmSystem) {
         this.alarmSystem = alarmSystem;
     }
 

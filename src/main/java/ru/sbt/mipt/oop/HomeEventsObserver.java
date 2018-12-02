@@ -1,7 +1,10 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.*;
+import ru.sbt.mipt.oop.sensoreventprovider.RandomSensorEventProvider;
+import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
+import ru.sbt.mipt.oop.sensoreventsmanager.SensorEventsManager;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 import java.util.ArrayList;
@@ -9,8 +12,8 @@ import java.util.List;
 
 public class HomeEventsObserver implements SensorEventsManager {
 
-    List<EventProcessor> eventProcessorList;
-    SensorEventProvider sensorEventProvider;
+    private List<EventProcessor> eventProcessorList;
+    private SensorEventProvider sensorEventProvider;
 
     @Override
     public void start() {
@@ -19,6 +22,14 @@ public class HomeEventsObserver implements SensorEventsManager {
             processEvent(event);
             event = sensorEventProvider.getNextSensorEvent();
         }
+    }
+
+    public void setEventProcessorList(List<EventProcessor> list) {
+        this.eventProcessorList = list;
+    }
+
+    public void setSensorEventProvider(SensorEventProvider sensorEventProvider) {
+        this.sensorEventProvider = sensorEventProvider;
     }
 
     public HomeEventsObserver(List<EventProcessor> eventProcessorsList, SensorEventProvider sensorEventProvider) {
@@ -31,11 +42,16 @@ public class HomeEventsObserver implements SensorEventsManager {
         this.sensorEventProvider = new RandomSensorEventProvider();
     }
 
+    HomeEventsObserver(SmartHome smartHome, SensorEventProvider sensorEventProvider) {
+        this.eventProcessorList = createEventProcessorList(smartHome);
+        this.sensorEventProvider = sensorEventProvider;
+    }
+
     public void addEventProcessor(EventProcessor eventProcessor) {
         eventProcessorList.add(eventProcessor);
     }
 
-    public void processEvent(SensorEvent event) {
+    private void processEvent(SensorEvent event) {
         System.out.println("Got event: " + event);
         for (EventProcessor eventProcessor : eventProcessorList) {
             eventProcessor.process(event);

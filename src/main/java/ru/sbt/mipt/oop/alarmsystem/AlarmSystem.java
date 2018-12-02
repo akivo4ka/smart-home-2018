@@ -1,6 +1,6 @@
-package ru.sbt.mipt.oop.alarmSystem;
+package ru.sbt.mipt.oop.alarmsystem;
 
-import static ru.sbt.mipt.oop.alarmSystem.AlarmSystemStateEnum.ALARM;
+import static ru.sbt.mipt.oop.alarmsystem.AlarmSystemStateEnum.ALARM;
 
 public class AlarmSystem {
 
@@ -28,7 +28,7 @@ public class AlarmSystem {
         }
     }
 
-    public void setAlarmSystemState(AlarmSystemState alarmSystemState) {
+    void setAlarmSystemState(AlarmSystemState alarmSystemState) {
         this.alarmSystemState = alarmSystemState;
     }
 

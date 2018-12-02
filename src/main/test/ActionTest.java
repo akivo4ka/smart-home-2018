@@ -1,8 +1,8 @@
 import org.junit.Test;
-import ru.sbt.mipt.oop.homeUnits.Door;
-import ru.sbt.mipt.oop.homeUnits.Light;
-import ru.sbt.mipt.oop.homeUnits.Room;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.Door;
+import ru.sbt.mipt.oop.homeunits.Light;
+import ru.sbt.mipt.oop.homeunits.Room;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 
 import java.util.*;
 

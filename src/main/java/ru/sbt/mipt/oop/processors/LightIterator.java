@@ -1,8 +1,8 @@
 package ru.sbt.mipt.oop.processors;
 
-import ru.sbt.mipt.oop.homeUnits.Light;
-import ru.sbt.mipt.oop.homeUnits.Room;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.Light;
+import ru.sbt.mipt.oop.homeunits.Room;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +15,7 @@ public class LightIterator implements Iterable<Light> {
     private int currentLightId;
     private List<Room> rooms;
 
-    public Room getCurrentRoom() {
+    Room getCurrentRoom() {
         return currentRoom;
     }
 
@@ -28,7 +28,7 @@ public class LightIterator implements Iterable<Light> {
 
     @Override
     public Iterator<Light> iterator() {
-        return new Iterator<Light>() {
+        return new Iterator<>() {
             @Override
             public boolean hasNext() {
                 if (currentRoomId > rooms.size() - 1) return false;

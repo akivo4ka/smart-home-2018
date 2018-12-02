@@ -1,11 +1,11 @@
-package ru.sbt.mipt.oop.remoteControl;
+package ru.sbt.mipt.oop.remotecontrol;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteControlRegistry {
 
-    List<RemoteControl> remoteControlList;
+    private List<RemoteControl> remoteControlList;
 
     public RemoteControlRegistry() {
         remoteControlList = new ArrayList<>();

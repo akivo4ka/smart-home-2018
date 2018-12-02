@@ -1,12 +1,15 @@
 import org.junit.Assert;
 import org.junit.Test;
-import ru.sbt.mipt.oop.*;
-import ru.sbt.mipt.oop.alarmSystem.AlarmSystem;
-import ru.sbt.mipt.oop.homeUnits.Door;
-import ru.sbt.mipt.oop.homeUnits.Room;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.FileSmartHomeLoader;
+import ru.sbt.mipt.oop.HomeEventsObserver;
+import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
+import ru.sbt.mipt.oop.SmartHomeLoader;
+import ru.sbt.mipt.oop.homeunits.Door;
+import ru.sbt.mipt.oop.homeunits.Room;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.*;
 import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
+import ru.sbt.mipt.oop.sensoreventprovider.MySensorEventProvider;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEventType;
 
@@ -16,24 +19,8 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ru.sbt.mipt.oop.alarmSystem.AlarmSystemStateEnum.*;
-
-class AlarmSystemTestSensorEventProvider implements SensorEventProvider {
-
-    List<SensorEvent> list;
-
-    int i = 0;
-
-    AlarmSystemTestSensorEventProvider(List<SensorEvent> list) {
-        this.list = list;
-    }
-
-    @Override
-    public SensorEvent getNextSensorEvent() {
-        if (i == list.size()) return null;
-        return list.get(i++);
-    }
-}
+import static ru.sbt.mipt.oop.alarmsystem.AlarmSystemStateEnum.ALARM;
+import static ru.sbt.mipt.oop.alarmsystem.AlarmSystemStateEnum.OFF;
 
 public class AlarmSystemTest {
 
@@ -54,7 +41,7 @@ public class AlarmSystemTest {
         AlarmSensorEvent alarmDeactivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwe");
         list.add(alarmActivateSensorEvent);
         list.add(alarmDeactivateSensorEvent);
-        SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
+        SensorEventProvider sensorEventProvider = new MySensorEventProvider(list);
 
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
         homeEventsObserver.start();
@@ -70,7 +57,7 @@ public class AlarmSystemTest {
         AlarmSensorEvent alarmDeactivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwe123QWE");
         list.add(alarmActivateSensorEvent);
         list.add(alarmDeactivateSensorEvent);
-        SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
+        SensorEventProvider sensorEventProvider = new MySensorEventProvider(list);
 
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
         homeEventsObserver.start();
@@ -80,7 +67,6 @@ public class AlarmSystemTest {
     @Test
     public void turnOnAlarmAndRunSensorEvent() throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
-        AlarmSystem alarmSystem = new AlarmSystem();
 
         List<EventProcessor> eventProcessorList = createEventProcessorList(smartHome);
 
@@ -90,7 +76,7 @@ public class AlarmSystemTest {
         SensorEvent doorOnEvent = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId);
         list.add(alarmSensorEvent);
         list.add(doorOnEvent);
-        SensorEventProvider sensorEventProvider = new AlarmSystemTestSensorEventProvider(list);
+        SensorEventProvider sensorEventProvider = new MySensorEventProvider(list);
 
         HomeEventsObserver homeEventsObserver = new HomeEventsObserver(eventProcessorList, sensorEventProvider);
         homeEventsObserver.start();

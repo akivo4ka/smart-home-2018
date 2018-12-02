@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop.commands;
 
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.HallDoorEventProcessor;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 

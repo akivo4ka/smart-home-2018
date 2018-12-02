@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop.processors;
 
-import ru.sbt.mipt.oop.alarmSystem.AlarmSystem;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
@@ -11,7 +11,7 @@ import static ru.sbt.mipt.oop.sensors.SensorEventType.ALARM_DEACTIVATE;
 public class AlarmEventProcessor implements EventProcessor {
 
     SmartHome smartHome;
-    AlarmSystem alarmSystem;
+    private AlarmSystem alarmSystem;
 
     public AlarmEventProcessor(SmartHome smartHome) {
         this.smartHome = smartHome;
@@ -33,7 +33,7 @@ public class AlarmEventProcessor implements EventProcessor {
         return smartHome;
     }
 
-    public AlarmSystem getAlarmSystem() {
+    AlarmSystem getAlarmSystem() {
         return alarmSystem;
     }
 

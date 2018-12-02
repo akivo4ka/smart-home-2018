@@ -1,22 +1,15 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
-
-import java.io.IOException;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import ru.sbt.mipt.oop.sensoreventsmanager.SensorEventsManager;
 
 public class Application {
 
-    private static SmartHomeLoader smartHomeLoader = new FileSmartHomeLoader();
+    public static void main(String... args) {
 
-    public void setSmartHomeLoader(SmartHomeLoader smartHomeLoader) {
-        Application.smartHomeLoader = smartHomeLoader;
-    }
-
-    public static void main(String... args) throws IOException {
-        SmartHome smartHome = smartHomeLoader.loadSmartHome();
-//        SensorEventsManager homeEventsObserver = new HomeEventsObserver(smartHome);
-//        homeEventsObserver.start();
-        SensorEventsManager sensorEventsManager = new AdapterSensorEventsManager();
+        AbstractApplicationContext context = new AnnotationConfigApplicationContext(MyConfiguration.class);
+        SensorEventsManager sensorEventsManager = context.getBean(SensorEventsManager.class);
         sensorEventsManager.start();
     }
 

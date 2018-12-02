@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop.commands;
 
-import ru.sbt.mipt.oop.homeUnits.Light;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.Light;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.LightIterator;
 
 public class TurnOffAllLightsCommand implements Command {

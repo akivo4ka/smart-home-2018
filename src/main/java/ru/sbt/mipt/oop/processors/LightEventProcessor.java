@@ -1,8 +1,8 @@
 package ru.sbt.mipt.oop.processors;
 
-import ru.sbt.mipt.oop.homeUnits.Light;
-import ru.sbt.mipt.oop.homeUnits.Room;
-import ru.sbt.mipt.oop.homeUnits.SmartHome;
+import ru.sbt.mipt.oop.homeunits.Light;
+import ru.sbt.mipt.oop.homeunits.Room;
+import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 import static ru.sbt.mipt.oop.sensors.SensorEventType.LIGHT_OFF;
@@ -20,7 +20,7 @@ public class LightEventProcessor implements EventProcessor {
     public void process(SensorEvent event) {
         if (!isLightEvent(event)) return;
         // Надо вынести в декоратор
-//        if (smartHome.alarmSystem.checkAlarmOn()) {
+//        if (smartHome.alarmsystem.checkAlarmOn()) {
 //            System.out.println("ALARM! Sending sms.");
 //            return;
 //        }
