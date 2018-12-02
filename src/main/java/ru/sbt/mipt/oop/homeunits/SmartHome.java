@@ -1,18 +1,22 @@
-package ru.sbt.mipt.oop.homeUnits;
+package ru.sbt.mipt.oop.homeunits;
 
 import ru.sbt.mipt.oop.Action;
-import ru.sbt.mipt.oop.alarmSystem.AlarmSystem;
+import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class SmartHome implements HomeUnit {
-    Collection<Room> rooms;
+    private Collection<Room> rooms;
 
     private AlarmSystem alarmSystem;
 
     public AlarmSystem getAlarmSystem() {
         return alarmSystem;
+    }
+
+    public void setAlarmSystem(AlarmSystem alarmSystem) {
+        this.alarmSystem = alarmSystem;
     }
 
     public SmartHome() {
