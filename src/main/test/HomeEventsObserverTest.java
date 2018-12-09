@@ -1,7 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 import ru.sbt.mipt.oop.FileSmartHomeLoader;
-import ru.sbt.mipt.oop.HomeEventsObserver;
+import ru.sbt.mipt.oop.sensoreventsmanager.HomeEventsObserver;
 import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
 import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
 import ru.sbt.mipt.oop.homeunits.SmartHome;

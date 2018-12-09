@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.*;
-import ru.sbt.mipt.oop.sensoreventprovider.RandomSensorEventProvider;
 import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
-import ru.sbt.mipt.oop.sensoreventsmanager.SensorEventsManager;
+import ru.sbt.mipt.oop.sensoreventsmanager.AdapterSensorEventsManager;
+import ru.sbt.mipt.oop.sensoreventsmanager.EventsManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,21 +17,20 @@ public class MyConfiguration {
 
     private SmartHome smartHome;
     private SensorEventProvider sensorEventProvider;
-    private SensorEventsManager sensorEventsManager;
+    private EventsManager sensorEventsManager;
     private static SmartHomeLoader smartHomeLoader = new FileSmartHomeLoader();
 
     @Bean
-    public SensorEventsManager getSensorEventsManager() {
+    public EventsManager getSensorEventsManager() {
         return sensorEventsManager;
     }
 
 
     public MyConfiguration() throws IOException {
         smartHome = smartHomeLoader.loadSmartHome();
-        sensorEventProvider = new RandomSensorEventProvider();
-        sensorEventsManager = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
-        // If we want to use external library:
-        // sensorEventsManager = new AdapterSensorEventsManager();
+        // sensorEventProvider = new RandomSensorEventProvider();
+        // sensorEventsManager = new HomeEventsObserver(createEventProcessorList(smartHome), sensorEventProvider);
+        sensorEventsManager = new AdapterSensorEventsManager(createEventProcessorList(smartHome));
     }
 
     public void setSmartHomeLoader(SmartHomeLoader smartHomeLoader) {

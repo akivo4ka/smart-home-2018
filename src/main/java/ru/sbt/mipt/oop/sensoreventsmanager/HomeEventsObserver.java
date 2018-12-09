@@ -1,13 +1,12 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.sensoreventsmanager;
 
 import ru.sbt.mipt.oop.processors.EventProcessor;
 import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
-import ru.sbt.mipt.oop.sensoreventsmanager.SensorEventsManager;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 import java.util.List;
 
-public class HomeEventsObserver implements SensorEventsManager {
+public class HomeEventsObserver implements EventsManager {
 
     private List<EventProcessor> eventProcessorList;
     private SensorEventProvider sensorEventProvider;

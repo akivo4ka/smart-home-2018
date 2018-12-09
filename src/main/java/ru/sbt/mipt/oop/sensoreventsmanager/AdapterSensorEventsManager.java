@@ -1,16 +1,26 @@
 package ru.sbt.mipt.oop.sensoreventsmanager;
 
-public class AdapterSensorEventsManager implements SensorEventsManager {
+import com.coolcompany.smarthome.events.SensorEventsManager;
+import ru.sbt.mipt.oop.processors.EventProcessor;
 
-    private com.coolcompany.smarthome.events.SensorEventsManager sensorEventsManager;
+import java.util.List;
 
-    public AdapterSensorEventsManager() {
-        this.sensorEventsManager = new com.coolcompany.smarthome.events.SensorEventsManager();
+public class AdapterSensorEventsManager implements EventsManager {
+
+    private SensorEventsManager sensorEventsManager;
+
+    public AdapterSensorEventsManager(List<EventProcessor> eventProcessorsList) {
+        this.sensorEventsManager = new SensorEventsManager();
+        for (EventProcessor eventProcessor : eventProcessorsList) {
+            this.sensorEventsManager.registerEventHandler(new AdapterEventHandler(eventProcessor));
+        }
     }
 
     @Override
     public void start() {
-        sensorEventsManager.registerEventHandler(event -> System.out.println("Event type [" + event.getEventType() + "] from object with id=[" + event.getObjectId() + "]"));
+        sensorEventsManager.registerEventHandler(event ->
+                System.out.println("Event type [" + event.getEventType() + "] from object with id=[" + event.getObjectId() + "]")
+        );
         sensorEventsManager.start();
     }
 }

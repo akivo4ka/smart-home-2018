@@ -2,7 +2,6 @@ package ru.sbt.mipt.oop.processors;
 
 import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
-import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
 import static ru.sbt.mipt.oop.sensors.SensorEventType.ALARM_ACTIVATE;
@@ -20,9 +19,9 @@ public class AlarmEventProcessor implements EventProcessor {
     public void process(SensorEvent event) {
         if (!isAlarmEvent(event)) return;
         if (event.getType() == ALARM_ACTIVATE) {
-            alarmSystem.turnOn(((AlarmSensorEvent) event).getCode());
+            alarmSystem.turnOn(event.getObjectId());
         } else {
-            alarmSystem.turnOff(((AlarmSensorEvent) event).getCode());
+            alarmSystem.turnOff(event.getObjectId());
         }
     }
 

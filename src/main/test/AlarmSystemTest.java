@@ -1,16 +1,15 @@
 import org.junit.Assert;
 import org.junit.Test;
 import ru.sbt.mipt.oop.FileSmartHomeLoader;
-import ru.sbt.mipt.oop.HomeEventsObserver;
-import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
-import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
 import ru.sbt.mipt.oop.SmartHomeLoader;
+import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
 import ru.sbt.mipt.oop.homeunits.Door;
 import ru.sbt.mipt.oop.homeunits.Room;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.*;
-import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
 import ru.sbt.mipt.oop.sensoreventprovider.MySensorEventProvider;
+import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
+import ru.sbt.mipt.oop.sensoreventsmanager.HomeEventsObserver;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEventType;
 
@@ -38,8 +37,8 @@ public class AlarmSystemTest {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
 
         List<SensorEvent> list = new ArrayList<>();
-        AlarmSensorEvent alarmActivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_ACTIVATE, "qwe123QWE");
-        AlarmSensorEvent alarmDeactivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwe");
+        SensorEvent alarmActivateSensorEvent = new SensorEvent(SensorEventType.ALARM_ACTIVATE, "qwe123QWE");
+        SensorEvent alarmDeactivateSensorEvent = new SensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwe");
         list.add(alarmActivateSensorEvent);
         list.add(alarmDeactivateSensorEvent);
         SensorEventProvider sensorEventProvider = new MySensorEventProvider(list);
@@ -54,8 +53,8 @@ public class AlarmSystemTest {
     public void turnOnSetsCodeAndTurnOff() throws IOException {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         List<SensorEvent> list = new ArrayList<>();
-        AlarmSensorEvent alarmActivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_ACTIVATE, "qwe123QWE");
-        AlarmSensorEvent alarmDeactivateSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwe123QWE");
+        SensorEvent alarmActivateSensorEvent = new SensorEvent(SensorEventType.ALARM_ACTIVATE, "qwe123QWE");
+        SensorEvent alarmDeactivateSensorEvent = new SensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwe123QWE");
         list.add(alarmActivateSensorEvent);
         list.add(alarmDeactivateSensorEvent);
         SensorEventProvider sensorEventProvider = new MySensorEventProvider(list);
@@ -73,7 +72,7 @@ public class AlarmSystemTest {
 
         List<SensorEvent> list = new ArrayList<>();
         String doorId = "3";
-        AlarmSensorEvent alarmSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_ACTIVATE, "qwe123QWE");
+        SensorEvent alarmSensorEvent = new SensorEvent(SensorEventType.ALARM_ACTIVATE, "qwe123QWE");
         SensorEvent doorOnEvent = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId);
         list.add(alarmSensorEvent);
         list.add(doorOnEvent);

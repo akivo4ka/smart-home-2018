@@ -10,7 +10,7 @@ import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.processors.AlarmEventProcessor;
 import ru.sbt.mipt.oop.processors.DoorIterator;
 import ru.sbt.mipt.oop.processors.LightIterator;
-import ru.sbt.mipt.oop.sensors.AlarmSensorEvent;
+import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEventType;
 
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class CommandTest {
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
         Command alarmSystemTest = new ActivateAlaramSystemCommand(smartHome);
         alarmSystemTest.execute();
-        AlarmSensorEvent alarmSensorEvent = new AlarmSensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwerty");
+        SensorEvent alarmSensorEvent = new SensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwerty");
         AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome);
         alarmEventProcessor.process(alarmSensorEvent);
         Assert.assertEquals(smartHome.getAlarmSystem().getSystemState(), AlarmSystemStateEnum.ALARM);
