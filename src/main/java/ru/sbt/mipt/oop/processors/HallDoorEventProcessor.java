@@ -25,11 +25,6 @@ public class HallDoorEventProcessor implements EventProcessor {
         System.out.println("... and light is turned off everywhere.");
     }
 
-    @Override
-    public SmartHome getSmartHome() {
-        return smartHome;
-    }
-
     private boolean isHallDoorEvent(SensorEvent event) {
         if (event.getType() != DOOR_CLOSED) return false;
         DoorIterator doorIterator = new DoorIterator(smartHome);

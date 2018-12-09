@@ -2,6 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.sbt.mipt.oop.FileSmartHomeLoader;
 import ru.sbt.mipt.oop.HomeEventsObserver;
+import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
 import ru.sbt.mipt.oop.sensoreventprovider.SensorEventProvider;
 import ru.sbt.mipt.oop.SmartHomeLoader;
 import ru.sbt.mipt.oop.homeunits.Door;
@@ -91,10 +92,11 @@ public class AlarmSystemTest {
     }
 
     private List<EventProcessor> createEventProcessorList(SmartHome smartHome) {
+        AlarmSystem alarmSystem = new AlarmSystem();
         List<EventProcessor> eventProcessorList = new ArrayList<>();
-        EventProcessor lightEventProcessor = new DecoratorCheckAlarmEventProcessor(new LightEventProcessor(smartHome));
-        EventProcessor doorEventProcessor = new DecoratorCheckAlarmEventProcessor(new DoorEventProcessor(smartHome));
-        EventProcessor hallDoorEventProcessor = new DecoratorCheckAlarmEventProcessor(new HallDoorEventProcessor(smartHome));
+        EventProcessor lightEventProcessor = new DecoratorCheckAlarmEventProcessor(new LightEventProcessor(smartHome), smartHome);
+        EventProcessor doorEventProcessor = new DecoratorCheckAlarmEventProcessor(new DoorEventProcessor(smartHome), smartHome);
+        EventProcessor hallDoorEventProcessor = new DecoratorCheckAlarmEventProcessor(new HallDoorEventProcessor(smartHome), smartHome);
         AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome);
         eventProcessorList.add(lightEventProcessor);
         eventProcessorList.add(doorEventProcessor);

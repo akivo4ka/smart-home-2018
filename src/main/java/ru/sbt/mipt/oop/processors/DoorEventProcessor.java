@@ -19,21 +19,11 @@ public class DoorEventProcessor implements EventProcessor {
     @Override
     public void process(SensorEvent event) {
         if (!isDoorEvent(event)) return;
-        // Надо вынести в декоратор
-//        if (smartHome.alarmsystem.checkAlarmOn()) {
-//            System.out.println("ALARM! Sending sms.");
-//            return;
-//        }
         DoorIterator doorIterator = new DoorIterator(smartHome);
         for (Door door : doorIterator) {
             if (processDoorEvent(event, doorIterator.getCurrentRoom(), door)) return;
         }
         System.out.println("Door with doorID = " + event.getObjectId() + " was not found.");
-    }
-
-    @Override
-    public SmartHome getSmartHome() {
-        return smartHome;
     }
 
     private boolean processDoorEvent(SensorEvent event, Room room, Door door) {

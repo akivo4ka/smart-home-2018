@@ -60,9 +60,9 @@ public class HomeEventsObserver implements SensorEventsManager {
 
     private static List<EventProcessor> createEventProcessorList(SmartHome smartHome) {
         List<EventProcessor> eventProcessorList = new ArrayList<>();
-        EventProcessor lightEventProcessor = new DecoratorCheckAlarmEventProcessor(new LightEventProcessor(smartHome));
-        EventProcessor doorEventProcessor = new DecoratorCheckAlarmEventProcessor(new DoorEventProcessor(smartHome));
-        EventProcessor hallDoorEventProcessor = new DecoratorCheckAlarmEventProcessor(new HallDoorEventProcessor(smartHome));
+        EventProcessor lightEventProcessor = new DecoratorCheckAlarmEventProcessor(new LightEventProcessor(smartHome), smartHome);
+        EventProcessor doorEventProcessor = new DecoratorCheckAlarmEventProcessor(new DoorEventProcessor(smartHome), smartHome);
+        EventProcessor hallDoorEventProcessor = new DecoratorCheckAlarmEventProcessor(new HallDoorEventProcessor(smartHome), smartHome);
         AlarmEventProcessor alarmEventProcessor = new AlarmEventProcessor(smartHome);
         eventProcessorList.add(lightEventProcessor);
         eventProcessorList.add(doorEventProcessor);

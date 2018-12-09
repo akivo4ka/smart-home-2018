@@ -10,11 +10,9 @@ import static ru.sbt.mipt.oop.sensors.SensorEventType.ALARM_DEACTIVATE;
 
 public class AlarmEventProcessor implements EventProcessor {
 
-    SmartHome smartHome;
     private AlarmSystem alarmSystem;
 
     public AlarmEventProcessor(SmartHome smartHome) {
-        this.smartHome = smartHome;
         this.alarmSystem = smartHome.getAlarmSystem();
     }
 
@@ -26,15 +24,6 @@ public class AlarmEventProcessor implements EventProcessor {
         } else {
             alarmSystem.turnOff(((AlarmSensorEvent) event).getCode());
         }
-    }
-
-    @Override
-    public SmartHome getSmartHome() {
-        return smartHome;
-    }
-
-    AlarmSystem getAlarmSystem() {
-        return alarmSystem;
     }
 
     private boolean isAlarmEvent(SensorEvent event) {

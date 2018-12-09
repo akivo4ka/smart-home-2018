@@ -31,12 +31,6 @@ public class LightEventProcessor implements EventProcessor {
         }
         System.out.println("Light with lightID = " + event.getObjectId() + " was not found.");
     }
-
-    @Override
-    public SmartHome getSmartHome() {
-        return smartHome;
-    }
-
     private boolean isLightEvent(SensorEvent event) {
         return (event.getType() == LIGHT_ON || event.getType() == LIGHT_OFF);
     }
