@@ -9,16 +9,27 @@ public class AlarmSystemStateAlarm implements AlarmSystemState {
     }
 
     @Override
-    public void turnOn() {
+    public void turnOn(String code) {
+        System.out.println("Alarm system is in Alarm state.");
+    }
+
+    @Override
+    public void turnOff(String code) {
+        if (alarmSystem.checkCode(code)) {
+            alarmSystem.setAlarmSystemState(new AlarmSystemStateOff(alarmSystem));
+            System.out.println("Alarm system is deactivated.");
+        } else {
+            System.out.println("Alarm system is still in Alarm state. Code is incorrect.");
+        }
+    }
+
+    @Override
+    public void setAlarm() {
+        System.out.println("Alarm system is already in Alarm state.");
     }
 
     @Override
     public AlarmSystemStateEnum getState() {
         return AlarmSystemStateEnum.ALARM;
-    }
-
-    @Override
-    public void turnOff() {
-        alarmSystem.setAlarmSystemState(new AlarmSystemStateOff(alarmSystem));
     }
 }

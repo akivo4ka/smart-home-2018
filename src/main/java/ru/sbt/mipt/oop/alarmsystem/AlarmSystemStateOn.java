@@ -14,11 +14,23 @@ public class AlarmSystemStateOn implements AlarmSystemState {
     }
 
     @Override
-    public void turnOff() {
-        alarmSystem.setAlarmSystemState(new AlarmSystemStateOff(alarmSystem));
-        System.out.println("Alarm system is deactivated.");
+    public void turnOff(String code) {
+        if (alarmSystem.checkCode(code)) {
+            alarmSystem.setAlarmSystemState(new AlarmSystemStateOff(alarmSystem));
+            System.out.println("Alarm system is deactivated.");
+        } else {
+            this.setAlarm();
+            System.out.println("ALARM! Incorrect code.");
+        }
     }
 
     @Override
-    public void turnOn() { }
+    public void setAlarm() {
+        alarmSystem.setAlarmSystemState(new AlarmSystemStateAlarm(alarmSystem));
+    }
+
+    @Override
+    public void turnOn(String code) {
+        System.out.println("Alarm system is already activated.");
+    }
 }

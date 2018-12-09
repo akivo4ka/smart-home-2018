@@ -2,9 +2,11 @@ package ru.sbt.mipt.oop.alarmsystem;
 
 public interface AlarmSystemState {
 
-    void turnOn();
+    void turnOn(String code);
 
-    void turnOff();
+    void turnOff(String code);
+
+    void setAlarm();
 
     AlarmSystemStateEnum getState();
 }

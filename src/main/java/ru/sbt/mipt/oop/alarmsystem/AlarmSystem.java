@@ -11,21 +11,15 @@ public class AlarmSystem {
     }
 
     public void setAlarm() {
-        setAlarmSystemState(new AlarmSystemStateAlarm(this));
+        alarmSystemState.setAlarm();
     }
 
     public void turnOn(String code) {
-        this.code = code;
-        alarmSystemState.turnOn();
+        alarmSystemState.turnOn(code);
     }
 
     public void turnOff(String code) {
-        if (this.code.equals(code)) {
-            alarmSystemState.turnOff();
-        } else {
-            setAlarmSystemState(new AlarmSystemStateAlarm(this));
-            System.out.println("ALARM! Code is incorrect!");
-        }
+        alarmSystemState.turnOff(code);
     }
 
     void setAlarmSystemState(AlarmSystemState alarmSystemState) {
@@ -36,7 +30,15 @@ public class AlarmSystem {
         return alarmSystemState.getState();
     }
 
-    private String code = "qwe123QWE!";
+    private int hashCode;
+
+    void setCode(String code) {
+        this.hashCode = code.hashCode();
+    }
+
+    boolean checkCode(String code) {
+        return this.hashCode == code.hashCode();
+    }
 
     public boolean checkAlarmOn() {
         return this.alarmSystemState.getState().equals(AlarmSystemStateEnum.ON);
