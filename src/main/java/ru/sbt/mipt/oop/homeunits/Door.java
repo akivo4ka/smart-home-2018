@@ -1,7 +1,5 @@
 package ru.sbt.mipt.oop.homeunits;
 
-import ru.sbt.mipt.oop.Action;
-
 public class Door implements HomeUnit {
     private final String id;
     private boolean isOpen;

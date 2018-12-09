@@ -1,6 +1,5 @@
 package ru.sbt.mipt.oop.homeunits;
 
-import ru.sbt.mipt.oop.Action;
 import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
 
 import java.util.ArrayList;
@@ -42,5 +41,26 @@ public class SmartHome implements HomeUnit {
             room.processAction(action);
         }
         action.execute(this);
+    }
+
+    public void turnOffAllLights() {
+        this.processAction(object1 -> {
+            if (object1 instanceof Light) {
+                Light light = (Light) object1;
+                light.setOn(false);
+            }
+        });
+        System.out.println("All lights were turned off.");
+    }
+
+    public void turnOnAllLights() {
+        this.processAction(object1 -> {
+            if (object1 instanceof Light) {
+                Light light = (Light) object1;
+                light.setOn(true);
+            }
+        });
+        System.out.println("All lights were turned on.");
+
     }
 }

@@ -1,7 +1,5 @@
 package ru.sbt.mipt.oop.homeunits;
 
-import ru.sbt.mipt.oop.Action;
-
 public class Light implements HomeUnit {
     private boolean isOn;
     private final String id;

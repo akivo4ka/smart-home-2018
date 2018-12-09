@@ -1,7 +1,6 @@
 package ru.sbt.mipt.oop.processors;
 
 import ru.sbt.mipt.oop.homeunits.Door;
-import ru.sbt.mipt.oop.homeunits.Room;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 
@@ -19,21 +18,17 @@ public class DoorEventProcessor implements EventProcessor {
     @Override
     public void process(SensorEvent event) {
         if (!isDoorEvent(event)) return;
-        DoorIterator doorIterator = new DoorIterator(smartHome);
-        for (Door door : doorIterator) {
-            if (processDoorEvent(event, doorIterator.getCurrentRoom(), door)) return;
-        }
-        System.out.println("Door with doorID = " + event.getObjectId() + " was not found.");
-    }
-
-    private boolean processDoorEvent(SensorEvent event, Room room, Door door) {
-        if (checkDoorIdEqualsEventId(event, door)) {
-            boolean b = (event.getType() == DOOR_OPEN);
-            door.setOpen(b);
-            System.out.println("Door " + door.getId() + " in room " + room.getName() + " was " + (b ? "opened." : "closed."));
-            return true;
-        }
-        return false;
+        smartHome.processAction(object -> {
+            if (object instanceof Door) {
+                Door door = (Door) object;
+                if (checkDoorIdEqualsEventId(event, door)) {
+                    boolean b = (event.getType() == DOOR_OPEN);
+                    door.setOpen(b);
+                    System.out.println("Door " + door.getId() + " was " + (b ? "opened." : "closed."));
+                }
+            }
+        });
+        // System.out.println("Door with doorID = " + event.getObjectId() + " was not found.");
     }
 
     private static boolean isDoorEvent(SensorEvent event) {

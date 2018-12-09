@@ -1,9 +1,11 @@
 package ru.sbt.mipt.oop.processors;
 
 import ru.sbt.mipt.oop.homeunits.Door;
-import ru.sbt.mipt.oop.homeunits.Light;
+import ru.sbt.mipt.oop.homeunits.Room;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
+
+import java.util.Collection;
 
 import static ru.sbt.mipt.oop.sensors.SensorEventType.DOOR_CLOSED;
 
@@ -18,26 +20,26 @@ public class HallDoorEventProcessor implements EventProcessor {
     @Override
     public void process(SensorEvent event) {
         if (!isHallDoorEvent(event)) return;
-        LightIterator lightIterator = new LightIterator(smartHome);
-        for (Light light : lightIterator) {
-            light.setOn(false);
-        }
-        System.out.println("... and light is turned off everywhere.");
+        smartHome.processAction(object -> {
+            if (object instanceof Room) {
+                Room room = (Room) object;
+                if (room.getName().equals("hall")) {
+                    Collection<Door> doors = room.getDoors();
+                    for (Door door : doors) {
+                        if (checkDoorIdEqualsEventId(event, door)) {
+                            door.setOpen(false);
+                            System.out.println("Hall door was closed...");
+                            smartHome.turnOffAllLights();
+                            break;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private boolean isHallDoorEvent(SensorEvent event) {
-        if (event.getType() != DOOR_CLOSED) return false;
-        DoorIterator doorIterator = new DoorIterator(smartHome);
-        for (Door door : doorIterator) {
-            if (doorIterator.getCurrentRoom().getName().equals("hall")) {
-                if (checkDoorIdEqualsEventId(event, door)) {
-                    door.setOpen(false);
-                    System.out.println("Hall door was closed ...");
-                    return true;
-                }
-            }
-        }
-        return false;
+        return (event.getType() == DOOR_CLOSED);
     }
 
     private boolean checkDoorIdEqualsEventId(SensorEvent event, Door door) {

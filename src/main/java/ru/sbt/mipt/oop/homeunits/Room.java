@@ -1,7 +1,5 @@
 package ru.sbt.mipt.oop.homeunits;
 
-import ru.sbt.mipt.oop.Action;
-
 import java.util.Collection;
 
 public class Room implements  HomeUnit {
