@@ -7,6 +7,8 @@ import ru.sbt.mipt.oop.commands.*;
 import ru.sbt.mipt.oop.homeunits.Door;
 import ru.sbt.mipt.oop.homeunits.Light;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
+import ru.sbt.mipt.oop.phrases.SmartHomePhrases;
+import ru.sbt.mipt.oop.phrases.SmartHomePhrasesLoader;
 import ru.sbt.mipt.oop.processors.AlarmEventProcessor;
 import ru.sbt.mipt.oop.processors.DoorIterator;
 import ru.sbt.mipt.oop.processors.LightIterator;
@@ -21,7 +23,9 @@ public class CommandTest {
 
     @Test
     public void testCommandHallDoorClose() throws IOException {
+        SmartHomePhrases smartHomePhrases = (new SmartHomePhrasesLoader()).loadSmartHomePhrases();
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
+        smartHome.setSmartHomePhrases(smartHomePhrases, "ru");
         Command closeHallDoorTest = new CloseHallDoorCommand(smartHome);
         closeHallDoorTest.execute();
         DoorIterator doorIterator = new DoorIterator(smartHome);
@@ -34,7 +38,9 @@ public class CommandTest {
 
     @Test
     public void testSwitchAllLight() throws IOException {
+        SmartHomePhrases smartHomePhrases = (new SmartHomePhrasesLoader()).loadSmartHomePhrases();
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
+        smartHome.setSmartHomePhrases(smartHomePhrases, "ru");
         Command turnOnAllLightTest = new TurnOnAllLightsCommand(smartHome);
         turnOnAllLightTest.execute();
         LightIterator lightIterator = new LightIterator(smartHome);
@@ -50,7 +56,9 @@ public class CommandTest {
 
     @Test
     public void testAlarmSystem() throws IOException {
+        SmartHomePhrases smartHomePhrases = (new SmartHomePhrasesLoader()).loadSmartHomePhrases();
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
+        smartHome.setSmartHomePhrases(smartHomePhrases, "ru");
         Command alarmSystemTest = new ActivateAlaramSystemCommand(smartHome);
         alarmSystemTest.execute();
         SensorEvent alarmSensorEvent = new SensorEvent(SensorEventType.ALARM_DEACTIVATE, "qwerty");

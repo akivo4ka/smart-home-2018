@@ -5,6 +5,8 @@ import ru.sbt.mipt.oop.SmartHomeLoader;
 import ru.sbt.mipt.oop.homeunits.Light;
 import ru.sbt.mipt.oop.homeunits.Room;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
+import ru.sbt.mipt.oop.phrases.SmartHomePhrases;
+import ru.sbt.mipt.oop.phrases.SmartHomePhrasesLoader;
 import ru.sbt.mipt.oop.processors.HallDoorEventProcessor;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEventType;
@@ -15,7 +17,9 @@ public class HallDoorEventProcessorTest {
 
     @Test
     public void processHallDoorEventTest() throws Exception {
+        SmartHomePhrases smartHomePhrases = (new SmartHomePhrasesLoader()).loadSmartHomePhrases();
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
+        smartHome.setSmartHomePhrases(smartHomePhrases, "ru");
         String doorId = "4";
         SensorEvent doorOnEvent = new SensorEvent(SensorEventType.DOOR_CLOSED, doorId);
         HallDoorEventProcessor hallDoorEventProcessor = new HallDoorEventProcessor(smartHome);

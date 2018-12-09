@@ -1,5 +1,6 @@
 package ru.sbt.mipt.oop.processors;
 
+import ru.sbt.mipt.oop.phrases.Phrase;
 import ru.sbt.mipt.oop.homeunits.Light;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
@@ -24,7 +25,8 @@ public class LightEventProcessor implements EventProcessor {
                 if (checkLightIdEqualsEventId(event, light)) {
                     boolean b = (event.getType() == LIGHT_ON);
                     light.setOn(b);
-                    System.out.println("Light " + light.getId() + " is turned " + (b ? "on" : "off") + " now.");
+                    Phrase phrase = smartHome.getSmartHomePhrases();
+                    System.out.format(phrase.getLightPhrase(), light.getId(), (b ? phrase.getLightOnPhrase() : phrase.getLightOffPhrase()));
                 }
             }
         });

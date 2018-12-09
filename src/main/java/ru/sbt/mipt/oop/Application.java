@@ -7,7 +7,6 @@ import ru.sbt.mipt.oop.sensoreventsmanager.EventsManager;
 public class Application {
 
     public static void main(String... args) {
-
         AbstractApplicationContext context = new AnnotationConfigApplicationContext(MyConfiguration.class);
         EventsManager sensorEventsManager = context.getBean(EventsManager.class);
         sensorEventsManager.start();

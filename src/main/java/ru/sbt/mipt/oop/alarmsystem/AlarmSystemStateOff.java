@@ -15,7 +15,7 @@ public class AlarmSystemStateOff implements AlarmSystemState {
 
     @Override
     public void turnOff(String code) {
-        System.out.println("Alarm system is already deactivated.");
+        System.out.println(alarmSystem.getPhrase().getAlarmSystemStateOffTurnOffPhrase());
     }
 
     @Override
@@ -26,7 +26,7 @@ public class AlarmSystemStateOff implements AlarmSystemState {
     @Override
     public void turnOn(String code) {
         alarmSystem.setCode(code);
-        this.alarmSystem.setAlarmSystemState(new AlarmSystemStateOn(this.alarmSystem));
-        System.out.println("Alarm system is activated.");
+        alarmSystem.setAlarmSystemState(new AlarmSystemStateOn(alarmSystem));
+        System.out.println(alarmSystem.getPhrase().getAlarmSystemStateOffTurnOnPhrase());
     }
 }

@@ -1,10 +1,21 @@
 package ru.sbt.mipt.oop.alarmsystem;
 
+import ru.sbt.mipt.oop.phrases.Phrase;
+
 import static ru.sbt.mipt.oop.alarmsystem.AlarmSystemStateEnum.ALARM;
 
 public class AlarmSystem {
 
     private AlarmSystemState alarmSystemState;
+    private Phrase phrase;
+
+    public void setPhrase(Phrase phrase) {
+        this.phrase = phrase;
+    }
+
+    public Phrase getPhrase() {
+        return phrase;
+    }
 
     public AlarmSystem() {
         this.alarmSystemState = new AlarmSystemStateOff(this);

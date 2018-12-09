@@ -10,22 +10,22 @@ public class AlarmSystemStateAlarm implements AlarmSystemState {
 
     @Override
     public void turnOn(String code) {
-        System.out.println("Alarm system is in Alarm state.");
+        System.out.println(alarmSystem.getPhrase().getAlarmSystemStateAlarmTurnOnPhrase());
     }
 
     @Override
     public void turnOff(String code) {
         if (alarmSystem.checkCode(code)) {
             alarmSystem.setAlarmSystemState(new AlarmSystemStateOff(alarmSystem));
-            System.out.println("Alarm system is deactivated.");
+            System.out.println(alarmSystem.getPhrase().getAlarmSystemStateAlarmTurnOffTruePhrase());
         } else {
-            System.out.println("Alarm system is still in Alarm state. Code is incorrect.");
+            System.out.println(alarmSystem.getPhrase().getAlarmSystemStateAlarmTurnOffFalsePhrase());
         }
     }
 
     @Override
     public void setAlarm() {
-        System.out.println("Alarm system is already in Alarm state.");
+        System.out.println(alarmSystem.getPhrase().getAlarmSystemStateAlarmSetAlarmPhrase());
     }
 
     @Override

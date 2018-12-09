@@ -13,6 +13,7 @@ public class AlarmEventProcessor implements EventProcessor {
 
     public AlarmEventProcessor(SmartHome smartHome) {
         this.alarmSystem = smartHome.getAlarmSystem();
+        this.alarmSystem.setPhrase(smartHome.getSmartHomePhrases());
     }
 
     @Override

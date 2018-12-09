@@ -4,6 +4,8 @@ import ru.sbt.mipt.oop.*;
 import ru.sbt.mipt.oop.homeunits.Light;
 import ru.sbt.mipt.oop.homeunits.Room;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
+import ru.sbt.mipt.oop.phrases.SmartHomePhrases;
+import ru.sbt.mipt.oop.phrases.SmartHomePhrasesLoader;
 import ru.sbt.mipt.oop.processors.LightEventProcessor;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
 import ru.sbt.mipt.oop.sensors.SensorEventType;
@@ -14,7 +16,9 @@ public class LightEventProcessorTest {
 
     @Test
     public void processLightEventTest() throws Exception {
+        SmartHomePhrases smartHomePhrases = (new SmartHomePhrasesLoader()).loadSmartHomePhrases();
         SmartHome smartHome = smartHomeLoader.loadSmartHome();
+        smartHome.setSmartHomePhrases(smartHomePhrases, "ru");
         String lightId = "1";
         SensorEvent lightOnEvent = new SensorEvent(SensorEventType.LIGHT_ON, lightId);
         LightEventProcessor lightEventProcessor = new LightEventProcessor(smartHome);

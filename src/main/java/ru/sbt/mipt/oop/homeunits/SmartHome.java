@@ -1,12 +1,28 @@
 package ru.sbt.mipt.oop.homeunits;
 
+import ru.sbt.mipt.oop.phrases.Phrase;
+import ru.sbt.mipt.oop.phrases.SmartHomePhrases;
 import ru.sbt.mipt.oop.alarmsystem.AlarmSystem;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class SmartHome implements HomeUnit {
+
+    public SmartHome() {
+        rooms = new ArrayList<>();
+        alarmSystem = new AlarmSystem();
+    }
+
     private Collection<Room> rooms;
+
+    public SmartHome(Collection<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public void addRoom(Room room) {
+        rooms.add(room);
+    }
 
     private AlarmSystem alarmSystem;
 
@@ -18,17 +34,15 @@ public class SmartHome implements HomeUnit {
         this.alarmSystem = alarmSystem;
     }
 
-    public SmartHome() {
-        rooms = new ArrayList<>();
-        alarmSystem = new AlarmSystem();
+    private SmartHomePhrases smartHomePhrases;
+
+    public void setSmartHomePhrases(SmartHomePhrases smartHomePhrases, String language) {
+        smartHomePhrases.setLanguage(language);
+        this.smartHomePhrases = smartHomePhrases;
     }
 
-    public SmartHome(Collection<Room> rooms) {
-        this.rooms = rooms;
-    }
-
-    public void addRoom(Room room) {
-        rooms.add(room);
+    public Phrase getSmartHomePhrases() {
+        return smartHomePhrases.getPhrases();
     }
 
     public Collection<Room> getRooms() {
@@ -37,7 +51,7 @@ public class SmartHome implements HomeUnit {
 
     @Override
     public void processAction(Action action) {
-        for (Room room: rooms) {
+        for (Room room : rooms) {
             room.processAction(action);
         }
         action.execute(this);
@@ -50,7 +64,7 @@ public class SmartHome implements HomeUnit {
                 light.setOn(false);
             }
         });
-        System.out.println("All lights were turned off.");
+        System.out.println(this.getSmartHomePhrases().getAllLightsOffPhrase());
     }
 
     public void turnOnAllLights() {
@@ -60,7 +74,7 @@ public class SmartHome implements HomeUnit {
                 light.setOn(true);
             }
         });
-        System.out.println("All lights were turned on.");
+        System.out.println(this.getSmartHomePhrases().getAllLightsOnPhrase());
 
     }
 }

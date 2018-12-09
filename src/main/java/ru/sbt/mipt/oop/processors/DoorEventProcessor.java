@@ -1,5 +1,6 @@
 package ru.sbt.mipt.oop.processors;
 
+import ru.sbt.mipt.oop.phrases.Phrase;
 import ru.sbt.mipt.oop.homeunits.Door;
 import ru.sbt.mipt.oop.homeunits.SmartHome;
 import ru.sbt.mipt.oop.sensors.SensorEvent;
@@ -24,7 +25,8 @@ public class DoorEventProcessor implements EventProcessor {
                 if (checkDoorIdEqualsEventId(event, door)) {
                     boolean b = (event.getType() == DOOR_OPEN);
                     door.setOpen(b);
-                    System.out.println("Door " + door.getId() + " was " + (b ? "opened." : "closed."));
+                    Phrase phrases = smartHome.getSmartHomePhrases();
+                    System.out.format(phrases.getDoorPhrase(), door.getId(), (b ? phrases.getDoorOpenedPhrase() : phrases.getDoorClosedPhrase()));
                 }
             }
         });

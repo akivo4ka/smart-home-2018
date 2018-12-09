@@ -21,7 +21,7 @@ public class DecoratorCheckAlarmEventProcessor implements EventProcessor {
     public void process(SensorEvent event) {
         if (alarmSystem.checkAlarmOn()) {
             alarmSystem.setAlarm();
-            System.out.println("ALARM! Sending sms.");
+            System.out.println(alarmSystem.getPhrase().getAlarmSms());
         } else if (!alarmSystem.checkAlarm()) {
             eventProcessor.process(event);
         }

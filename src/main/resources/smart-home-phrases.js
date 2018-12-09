@@ -1,0 +1,50 @@
+{
+"en":
+  {
+    "getEvent": "Got event:",
+    "doorPhrase": "Door %s was %s.",
+    "doorOpenedPhrase": "opened",
+    "doorClosedPhrase": "closed",
+    "hallDoorClosedPhrase": "Hall door was closed...",
+    "lightPhrase": "Light %s was turned %s.",
+    "lightOnPhrase": "on",
+    "lightOffPhrase": "off",
+    "allLightsOnPhrase": "All lights were turned on.",
+    "allLightsOffPhrase": "All lights were turned off.",
+    "alarmSystemStateOnTurnOnPhrase": "Alarm system is already activated.",
+    "alarmSystemStateOnTurnOffTruePhrase": "Alarm system is deactivated.",
+    "alarmSystemStateOnTurnOffFalsePhrase": "ALARM! Incorrect code.",
+    "alarmSystemStateOffTurnOnPhrase": "Alarm system is activated.",
+    "alarmSystemStateOffTurnOffPhrase": "Alarm system is already deactivated.",
+    "alarmSystemStateOffTurnOffFalsePhrase": "ALARM! Incorrect code.",
+    "alarmSystemStateAlarmTurnOnPhrase": "Alarm system is in Alarm state.",
+    "alarmSystemStateAlarmTurnOffTruePhrase": "Alarm system is deactivated.",
+    "alarmSystemStateAlarmTurnOffFalsePhrase": "Alarm system is still in Alarm state. Code is incorrect.",
+    "alarmSystemStateAlarmSetAlarmPhrase": "Alarm system is already in Alarm state.",
+    "alarmSms": "ALARM! Sending sms."
+  },
+  "ru":
+  {
+    "getEvent": "Получено событие:",
+    "doorPhrase": "Дверь %s была %s.",
+    "doorOpenedPhrase": "открыта",
+    "doorClosedPhrase": "закрыта",
+    "hallDoorClosedPhrase": "Дверь в холле была закрыта...",
+    "lightPhrase": "Лампочка %s была %s.",
+    "lightOnPhrase": "включена",
+    "lightOffPhrase": "выключена",
+    "allLightsOnPhrase": "Все лампочки были включены.",
+    "allLightsOffPhrase": "Все лампочки были выключены.",
+    "alarmSystemStateOnTurnOnPhrase": "Система сигнализации уже активирована.",
+    "alarmSystemStateOnTurnOffTruePhrase": "Система сигнализации деактивирована.",
+    "alarmSystemStateOnTurnOffFalsePhrase": "ТРЕВОГА! Неверный код.",
+    "alarmSystemStateOffTurnOnPhrase": "Система сигнализации активирована.",
+    "alarmSystemStateOffTurnOffPhrase": "Система сигнализации уже деактивирована.",
+    "alarmSystemStateOffTurnOffFalsePhrase": "ТРЕВОГА! Неверный код.",
+    "alarmSystemStateAlarmTurnOnPhrase": "Система сигнализации в состоянии тревоги.",
+    "alarmSystemStateAlarmTurnOffTruePhrase": "Система сигнализации деактивирована.",
+    "alarmSystemStateAlarmTurnOffFalsePhrase": "Система сигнализации всё ещё в состоянии тревоги. Неверный код.",
+    "alarmSystemStateAlarmSetAlarmPhrase": "Система сигнализации уже в состоянии тревоги.",
+    "alarmSms": "ТРЕВОГА! Отправка sms."
+  }
+}

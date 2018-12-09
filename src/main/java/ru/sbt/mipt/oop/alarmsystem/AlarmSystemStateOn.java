@@ -17,10 +17,10 @@ public class AlarmSystemStateOn implements AlarmSystemState {
     public void turnOff(String code) {
         if (alarmSystem.checkCode(code)) {
             alarmSystem.setAlarmSystemState(new AlarmSystemStateOff(alarmSystem));
-            System.out.println("Alarm system is deactivated.");
+            System.out.println(alarmSystem.getPhrase().getAlarmSystemStateOnTurnOffTruePhrase());
         } else {
             this.setAlarm();
-            System.out.println("ALARM! Incorrect code.");
+            System.out.println(alarmSystem.getPhrase().getAlarmSystemStateOnTurnOffFalsePhrase());
         }
     }
 
@@ -31,6 +31,6 @@ public class AlarmSystemStateOn implements AlarmSystemState {
 
     @Override
     public void turnOn(String code) {
-        System.out.println("Alarm system is already activated.");
+        System.out.println(alarmSystem.getPhrase().getAlarmSystemStateOnTurnOnPhrase());
     }
 }

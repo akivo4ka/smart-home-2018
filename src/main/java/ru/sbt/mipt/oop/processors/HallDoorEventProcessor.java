@@ -28,7 +28,7 @@ public class HallDoorEventProcessor implements EventProcessor {
                     for (Door door : doors) {
                         if (checkDoorIdEqualsEventId(event, door)) {
                             door.setOpen(false);
-                            System.out.println("Hall door was closed...");
+                            System.out.println(smartHome.getSmartHomePhrases().getHallDoorClosedPhrase());
                             smartHome.turnOffAllLights();
                             break;
                         }
